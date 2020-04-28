@@ -1,25 +1,33 @@
 #include <stdio.h>
-#include "extras.h"
+#include <string.h>
+#include <extras.h>
 
-// Function: defragment()
-// Input: record - array of Records; this may contain empty elements in the middle
-// Output: 1 if successful, otherwise 0
-// - Leave a brief information about the function
-int defragment(Record records[]){
-	// TODO: Modify this function as you need
-	printf("defragment(): this function needs to be implemented\n\n");
-	return 0;	// TODO: return 1 if defragment succeed; return 0 otherwise 
+void swap(Record* curr, Record next){
+  Record temp;
+  temp = curr;
+  curr = next;
+  next = temp;
 }
 
-
-// Function: add_a_record()
-// Input: record - array of Records; this may contain empty elements in the middle
-// Output: none
-// - Leave a brief information about the function
-void display_stats(Record records[]){
-	// TODO: Modify this function as you need
-	printf("display_stats(): this function needs to be implemented\n\n"); // TODO: Remove this line
+int defragmentation(Record records[], int* count){
+  printf("Defragmentation progressing......\n");
+  for(int i=0; i<count ; i++){
+    if(ctrcmp(records[i].bookname, " ") == 0){
+      swap(&records[i], &records[i+1]);
+    }
+  }
+  return 0;
 }
 
-
-// TODO: Add more functions to fulfill the optional requirements
+void sort(Record records[], int* count){
+  Record temp;
+  for(int i=0; i < count-1 ; i++){
+    for(int j=1; j<count; j++){
+      if(strcmp(records[i].bookname, records[j])>0){
+        strcpy(&temp, &records[i]);
+        strcpy(&records[i], &records[j]);
+        strcpy(&records[j], &temp);
+      }
+    }
+  }
+}
