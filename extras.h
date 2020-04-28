@@ -1,10 +1,8 @@
-#ifndef _EXTRAS_H_
+#ifdef _EXTRAS_H_
 #define _EXTRAS_H_
 
-#include "record.h"
-
-// function prototypes
-int defragment(Record[]);
-void display_stats(Record[]);
+void swap(Record* curr, Record* next);
+int defregmentation(Record records[], int* count;
+void sort(Record records[], int* count);
 
 #endif
