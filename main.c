@@ -1,29 +1,36 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include "base.h"
 #include "extras.h"
 #include "record.h"
 
 #define MAX_RECORDS 1000
+#define FILE_NAME "record.txt"
+FILE* fp = NULL;
 
-// function prototypes
-void input_handler(char[], Record[]);
+void input_handler(char[], Record records[]);
 void display_menu();
+
+int count = 0;
+int saveFile(Record records[], int* count);
 
 // main function
 int main(){
+  Record records[MAX_RECORDS];
 
-	Record records[MAX_RECORDS];
-	char user_input[64] = "";
-	while(strcmp(user_input, "99") != 0){
-		display_menu();
-		printf("\nSelect a menu> ");
-		fgets(user_input, 64, stdin);
-		user_input[strlen(user_input)-1] = '\0';
-		input_handler(user_input, records);
-	}
+  openFle(records, &count);
 
-	return 0;
+  char user_input[64] = "";
+  while(strcmp(user_input, "99") != 0){
+    display_menu();
+    printf("\nSelect a menu> ");
+    fgets(user_input, 64, stdin);
+    user_input[strlen(user_input)-1] = '\0';
+    input_handler(user_input, records);
+  }
+
+  return 0;
 }
 
 
@@ -33,20 +40,24 @@ int main(){
 // - Handles the user input and invokes functions that correspond to the user input
 void input_handler(char input[], Record records[]){
 
-	// TODO: Modify this function as you need
-
-	if(!strcmp(input, "1"))
-		add_a_record(records);
-	else if(!strcmp(input, "2"))
-		print_all_records(records);	
-	else if(!strcmp(input, "3"))
-		defragment(records);
-	else if(!strcmp(input, "4"))
-		display_stats(records);	
-	else if(!strcmp(input, "99"))
-		printf("Terminating... bye!\n"); // Quit - no operation (an empty statement with a semi-colon)
-	else
-		printf("Unknown menu: %s \n\n", input);
+    if(!strcmp(input, "1"))
+        print_book(records, &count);
+    if(!strcmp(input, "2"))
+        add_book(records, &count);
+    if(!strcmp(input, "3"))
+        search_book(records, &count);
+    if(!strcmp(input, "4"))
+        delete_book(records, &count);
+    if(!strcmp(input, "5"))
+        defragmentation(records, &count);
+    if(!strcmp(input, "6"))
+        sort(records, &count);
+    else if(!strcmp(input, "99")){
+      saveFile(records, &count);
+      printf("Terminating... bye!\n");
+    }
+    else
+        printf("Unknown menu: %s \n\n", input);
 }
 
 
@@ -54,17 +65,17 @@ void input_handler(char input[], Record records[]){
 // Function: display_menu()
 // Input: none
 // Output: none
-// - Leave a brief information about the function
 void display_menu(){
 
-	// TODO: Modify this function as you need
-
-	printf("******************************\n");
-	printf(" Membership management system \n");
-	printf("******************************\n");
-	printf(" 1. Add a new membber\n");
-	printf(" 2. Print all members\n");
-	printf(" 3. Optimize (defragment) the records\n");
-	printf(" 4. Member statistics\n");
-	printf(" 99. Quit\n");
+    // TODO: Modify this function as you need
+    printf("******************************\n");
+    printf("Book Management System \n");
+    printf("******************************\n");
+    printf(" 1. List all\n");
+    printf(" 2. Add books\n");
+    printf(" 3. Search\n");
+    printf(" 4. Delete books\n");
+    printf(" 5. defragment space\n");
+    printf(" 6. sort data in alphabetical order\n");
+    printf(" 99. Quit\n");
 }
