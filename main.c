@@ -9,7 +9,7 @@
 #define FILE_NAME "record.txt"
 FILE* fp = NULL;
 
-void input_handler(char[], Record records[]);
+void input_handler(char[], Record records[], int* count);
 void display_menu();
 
 int count = 0;
@@ -19,7 +19,7 @@ int saveFile(Record records[], int* count);
 int main(){
   Record records[MAX_RECORDS];
 
-  openFle(records, &count);
+  int count = openFile(records);
 
   char user_input[64] = "";
   while(strcmp(user_input, "99") != 0){
@@ -27,7 +27,7 @@ int main(){
     printf("\nSelect a menu> ");
     fgets(user_input, 64, stdin);
     user_input[strlen(user_input)-1] = '\0';
-    input_handler(user_input, records);
+    input_handler(user_input, records, count);
   }
 
   return 0;
@@ -38,22 +38,22 @@ int main(){
 // Input: record - array of Records; this may contain empty elements in the middle
 // Output: none
 // - Handles the user input and invokes functions that correspond to the user input
-void input_handler(char input[], Record records[]){
+void input_handler(char input[], Record records[], int* count){
 
     if(!strcmp(input, "1"))
-        print_book(records, &count);
+        print_book(records, count);
     if(!strcmp(input, "2"))
-        add_book(records, &count);
+        add_book(records, count);
     if(!strcmp(input, "3"))
-        search_book(records, &count);
+        search_book(records, count);
     if(!strcmp(input, "4"))
-        delete_book(records, &count);
+        delete_book(records, count);
     if(!strcmp(input, "5"))
-        defragmentation(records, &count);
+        defragmentation(records, count);
     if(!strcmp(input, "6"))
-        sort(records, &count);
+        sort(records, count);
     else if(!strcmp(input, "99")){
-      saveFile(records, &count);
+      saveFile(records, count);
       printf("Terminating... bye!\n");
     }
     else
