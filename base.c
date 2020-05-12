@@ -12,7 +12,7 @@ void print_book(Record records[], int* count){
   int i = 0;
 
   printf("ID\t\tName\t\tAuthor\t\tGenre\t\tQuantity\t\tISBN");
-  while(i < &&count){
+  while(i < *count){
     printf("%s\t\t%s\t\t%s\t\t%d\t\t%s\n", records[i].bookname, records[i].author, records[i].genre, records[i].quantity, records[i].isbn);;
     i++;
   }
@@ -24,7 +24,7 @@ void print_book(Record records[], int* count){
 
 void add_book(Record records[], int* count){
   int add = 0;
-  int i = &count;
+  int i = *count;
 
   printf("=========================\n");
   printf("Book Management System : Add books\n");
@@ -40,7 +40,7 @@ void add_book(Record records[], int* count){
     scanf("%d", &records[i].quantity);
     printf("ISBN: ");
     scanf("%s", records[i].isbn);
-    count++;
+    *count++;
 
     printf("Add more?(Yes: 1, No:0):");
     scanf("%d", &add);
@@ -79,7 +79,7 @@ void search_book(Record records[], int* count){
                 printf("\n");
                 printf("ID\t\tName\t\tAuthor\t\tGenre\t\tQuantity\t\tISBN");
 
-                for(i = 0 ; i < &count; i++){
+                for(i = 0 ; i < *count; i++){
                     if(!strcmp(&command_name, records[i].bookname)){
                         printf("%s\t\t\t%s\t\t%s\t\t%d\t%s\n", records[i].bookname, records[i].author, records[i].genre, records[i].quantity, records[i].isbn);
                     }
@@ -96,7 +96,7 @@ void search_book(Record records[], int* count){
                 printf("\n");
                 printf("ID\t\tName\t\tAuthor\t\tGenre\t\tQuantity\t\tISBN");
 
-                for(i = 0 ; i < &count; i++){
+                for(i = 0 ; i < *count; i++){
                     if(!strcmp(&command_name, records[i].author)){
                         printf("%s\t\t\t%s\t\t%s\t\t%d\t%s\n", records[i].bookname, records[i].author, records[i].genre, records[i].quantity, records[i].isbn);
                     }
@@ -113,7 +113,7 @@ void search_book(Record records[], int* count){
                 printf("\n");
                 printf("ID\t\tName\t\tAuthor\t\tGenre\t\tQuantity\t\tISBN");
 
-                for(i = 0 ; i < &count; i++){
+                for(i = 0 ; i < *count; i++){
                     if(!strcmp(&command_name, records[i].genre)){
                         printf("%s\t\t\t%s\t\t%s\t\t%d\t%s\n", records[i].bookname, records[i].author, records[i].genre, records[i].quantity, records[i].isbn);
                     }
@@ -130,8 +130,8 @@ void search_book(Record records[], int* count){
                 printf("\n");
                 printf("ID\t\tName\t\tAuthor\t\tGenre\t\tQuantity\t\tISBN");
 
-                for(i = 0 ; i < &count; i++){
-                    if(comm == &records[i].quantity){
+                for(i = 0 ; i < *count; i++){
+                    if(comm == records[i].quantity){
                         printf("%s\t\t\t%s\t\t%s\t\t%d\t%s\n", records[i].bookname, records[i].author, records[i].genre, records[i].quantity, records[i].isbn);
                     }
                     else
@@ -147,7 +147,7 @@ void search_book(Record records[], int* count){
                 printf("\n");
                 printf("ID\t\tName\t\tAuthor\t\tGenre\t\tQuantity\t\tISBN");
 
-                for(i = 0 ; i < &count; i++){
+                for(i = 0 ; i < *count; i++){
                     if(!strcmp(&command_name, records[i].isbn)){
                         printf("%s\t\t\t%s\t\t%s\t\t%d\t%s\n", records[i].bookname, records[i].author, records[i].genre, records[i].quantity, records[i].isbn);;
                     }
@@ -171,16 +171,16 @@ int delete_book(Record records[], int* count){
   printf("Book Management System : Delete books\n");
   printf("=========================\n");
   printf("bookname> ");
-  scanf("%s", &input);
+  scanf("%s", input);
 
-  for(i=0 ; i <= &count; i++){
-    if(strcpy(input, records[]i.bookname) == 0){
-      &count -= 1;
+  for(i=0 ; i <= *count; i++){
+    if(strcpy(input, records[i].bookname) == 0){
+      *count -= 1;
       printf("%s %s is deleted\n", records[i].bookname, records[i].author);
       strcpy(records[i].bookname, nullStr);
       strcpy(records[i].author, nullStr);
       strcpy(records[i].genre, nullStr);
-      memset(&records[i].quantity, 0, sizeof(&books[id_num].quantity));
+      memset(&records[i].quantity, 0, sizeof(records[i].quantity));
       strcpy(records[i].isbn, nullStr);
     }
   }
@@ -198,9 +198,9 @@ int update_book(Record records[], int* count){
   printf("=========================\n");
   while(cont == 1){
     printf("Enter bookname>> ");
-    scanf("%s", &input);
+    scanf("%s", input);
 
-    for(int i=0 ; i<count ; i++){
+    for(int i=0 ; i < *count ; i++){
       if(strcmp(records[i].bookname, input)==0){
         printf("Please select the part to update\n");
         printf("1.Name of the Book\n");
@@ -212,18 +212,18 @@ int update_book(Record records[], int* count){
         scanf("%d", &command);
         if(command == 1){
           printf("Enter Updated information: ");
-          scanf("%s", &updated_information);
-          records[i].bookname = updated_information;
+          scanf("%s", updated_information);
+          strcpy(records[i].bookname,updated_information);
         }
         if(command == 2){
           printf("Enter Updated information: ");
-          scanf("%s", &updated_information);
-          records[i].author = updated_information;
+          scanf("%s", updated_information);
+          strcpy(records[i].author, updated_information);
         }
         if(command == 3){
           printf("Enter Updated information: ");
-          scanf("%s", &updated_information);
-          records[i].genre = updated_information;
+          scanf("%s", updated_information);
+          strcpy(records[i].genre, updated_information);
         }
         if(command == 4){
           printf("Enter Updated information: ");
@@ -232,8 +232,8 @@ int update_book(Record records[], int* count){
         }
         if(command == 5){
           printf("Enter Updated information: ");
-          scanf("%s", &updated_information);
-          records[i].isbn = updated_information;
+          scanf("%s", updated_information);
+          strcpy(records[i].isbn, updated_information);
         }
       }
     }
@@ -249,9 +249,9 @@ int saveFile(Record records[], int* count){
     int i;
     FILE* fp = fopen("record.txt", "w");
 
-    for (i = 0; i <= count; i++){
-      fprintf(fp, "%s %s %s %d %s", records[i].id, records[i].bookname, records[i].author, records[i].genre, records[i].quantity, records[i].isbn);
-      if(i == count)
+    for (i = 0; i <= *count; i++){
+      fprintf(fp, "%s %s %s %d %s", records[i].bookname, records[i].author, records[i].genre, records[i].quantity, records[i].isbn);
+      if(i == *count)
         continue;
       else
         fputc('\n', fp);
@@ -266,15 +266,21 @@ int saveFile(Record records[], int* count){
 }
 
 int openFile(Record records[], int* count){
-  FILE* fp = fopen("record.txt", "rt");
-  if(fp = NULL){
+  FILE* fp = fopen("record.txt", "r");
+  int i = 0;
+  if(fp == NULL){
     printf("File Open Error!\n");
     return 1;
   }
-  while(1){
-    fscanf(fp, "%s %s %s %d %s", records[i].bookname, records[i].author, records[i].genre, &records[i].quantity, records[i].isbn);
-    if(feof(fp) != 0)
-      break;
+  else{
+    while(1){
+      if(feof(fp))
+        break;
+      else{
+        fscanf(fp, "%s %s %s %d %s", records[i].bookname, records[i].author, records[i].genre, &records[i].quantity, records[i].isbn);
+        i++;
+      }
+    }
   }
   fclose(fp);
   return 0;
